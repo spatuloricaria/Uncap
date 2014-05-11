@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load pages_tags cache %}
+
+{% block user_auth %}
+    {% if request.user.is_authenticated %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Profil utilisateur</a></li>
+                <li><a href="#">Gestion des API keys</a></li>
+                <li><a href="#">Gestion des services</a></li>
+                {% if request.user.is_staff %}
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Staff</li>
+                    <li><a href="#">Activation de comptes</a></li>
+                    <li><a href="#">Gestion des erreurs</a></li>
+                    <li><a href="/admin">Console d'admin</a></li>
+                {% endif %}
+            </ul>
+        </li>
+        <form class="navbar-form navbar-right" role="form" action="/accounts/logout/">
+            <input type="hidden" name="next" value="{% show_absolute_url current_page %}" />
+            <button type="submit" class="btn btn-success">Logout</button>
+        </form>
+    {% else %}
+        <form class="navbar-form navbar-right" role="form" method="post" action="/accounts/login/" >
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" id="id_username" maxlength="254" name="username" placeholder="User" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="password" id="id_password" name="password" placeholder="Password" class="form-control">
+            </div>
+            <input type="hidden" name="next" value="{% show_absolute_url current_page %}" />
+            <button type="submit" class="btn btn-success" value="login">Connection</button>
+        </form>
+    {% endif %}
+{% endblock %}

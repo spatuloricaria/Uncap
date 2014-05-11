@@ -1,0 +1,15 @@
+{% extends "registration/base.html" %}
+
+{% block title %}Compte activé{% endblock %}
+
+{% block content %}
+    <h1>Compte activé.</h1>
+    {% if account %}
+        <p>Merci de vous etre enregistré. Vous pouvez maintenant vous connecter.</p>
+    {% else %}
+        <p>
+            Désolé votre compte n'a pas pu etre activé.
+            Soit le lien d'activation n'est pas valide, soit la clef d'activation de ce compte a expirée.
+            Les liens d'activation sont valides {{ expiration_days|apnumber }} jours après leur création.
+    {% endif %}
+{% endblock %}

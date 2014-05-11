@@ -1,0 +1,9 @@
+Bonjour,
+
+Merci de vous être inscrit sur le site Uncap inc. Votre compte a été créé et doit être activé avant que vous puissiez l'utiliser.
+Pour l'activer, cliquez sur le lien ci-dessous ou copiez et collez le dans votre navigateur :
+http://127.0.0.1:8000/accounts/activate/{{ activation_key }}/
+
+Après activation vous pourrez vous connecter sur http://127.0.0.1:8000/.
+
+l'équipe Uncap inc.

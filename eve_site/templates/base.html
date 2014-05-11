@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="{lang}">
+    <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>
+            {% block title %}
+            My amazing site
+            {% endblock %}
+        </title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/sticky-footer-navbar.css' %}" />
+
+        {% block css %} {% endblock %}
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
+          <script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"> {% block projet %} Project name {% endblock %} </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        {% block menu %} {% endblock %}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% block user_auth %} {% endblock %}
+                    </ul>
+                </div> <!--/.nav-collapse -->
+            </div> <!--/.container -->
+        </div>  <!--/.navbar -->
+
+        <!-- Begin page content -->
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <div id="footer">
+            <div class="container">
+                <p class="text-muted credit">
+                    ©CCP hf. All rights reserved. Used with permission.
+                    <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." /></a>
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+        {% block javascript %}
+        {% endblock %}
+
+    </body>
+</html>

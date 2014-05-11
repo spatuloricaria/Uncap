@@ -1,0 +1,89 @@
+{% extends "pages/base_pages.html" %}
+{% load cache pages_tags i18n %}
+    {% comment %}Important to enable other applications to inherit the template{% endcomment %}
+    {% load_pages %}
+
+{% block menu %}
+    {% for page in pages_navigation %}
+        {% pages_menu page %}
+    {% endfor %}
+    {% if request.user.is_authenticated %}
+    {% else %}
+        <li><a href="/accounts/register">Créer un compte</a></li>
+    {% endif %}
+
+{% endblock %}
+
+{% block projet %}
+    Uncap inc.
+{% endblock %}
+
+{% block title %}
+    {% show_content current_page "title" %}
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    <div class="page-header">
+        <h1>
+            <div class="laceholder"> {% placeholder "article_title" with TextInput %} </div>
+        </h1>
+    </div>
+
+    {% imageplaceholder "body image" as imgsrc %}
+    {% if imgsrc %}
+        <img src="{{ MEDIA_URL }}{{ imgsrc }}" alt=""/>
+    {% endif %}
+
+
+    <div class= "lead">
+        <p class="lead">{% placeholder article on current_page with Textarea  %}</p>
+    </div>
+    <p>
+        <div class="laceholder"> {% placeholder "article_followup" with TextInput %} </div>
+    </p>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+$(function(){
+    // quick and dirty edit in place example
+    {% if request.user.is_authenticated %}
+        $('.placeholder').addClass('placeholder-editable');
+    {% endif %}
+
+    $('.placeholder-editable').mouseover(function() {
+        $(this).addClass('placeholder-over');
+    });
+
+    $('.placeholder-editable').mouseout(function() {
+        $(this).removeClass('placeholder-over');
+    });
+
+    $('.placeholder-editable').click(function() {
+        var p = $(this);
+        if(p.hasClass('edit')) {
+            return false;
+        }
+        p.addClass('edit');
+        var height = p.height()+20;
+        var width = p.width()-10;
+        p.html('<textarea style="width:'+width+'px;height:'+height+'px">'+ this.innerHTML +'</textarea><input type="submit" value="Save" />');
+        $('input', p).click( function() {
+            var content = $('textarea', p).val();
+            $.post('/admin/pages/page/{{ current_page.id }}/modify-content/'+p.attr('id')+'/{{ lang }}/', {'content':content}, function(response) {
+                if(response=="ok") {
+                    p.html(content);
+                    p.removeClass('edit');
+                    p.removeClass('placeholder-over');
+                } else {
+                    alert("You need to authenticate to the admin to edit the content");
+                }
+            });
+            return false;
+        });
+    });
+});
+
+</script>
+{% endblock %}
